@@ -3,28 +3,33 @@ name: Deploy React App to EC2
 on:
   push:
     branches:
-      - main  # Deploy on push to main branch
+      - main  # runs whenever you push to main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Get your code
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js in GitHub Actions
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Step 3: Install dependencies in the CI environment
       - name: Install Dependencies
         run: npm install
 
+      # Step 4: Build React app in CI environment
       - name: Build React App
         run: npm run build
 
-      - name: Copy Build to EC2
+      # Step 5: Copy build folder to EC2
+      - name: Deploy Build to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 34.229.189.133
@@ -33,6 +38,7 @@ jobs:
           source: "build/*"
           target: "/home/ec2-user/hinduism-website/build"
 
+      # Step 6: Restart Nginx to pick up new build
       - name: Restart Nginx
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -40,5 +46,4 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Optional: if you have nginx serving this folder, restart it
             sudo systemctl restart nginx
