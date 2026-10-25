@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Blossom Within
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The website for the Hindi YouTube channel [Blossom Within](https://www.youtube.com/@Blossomwithincreations) — stories from the Vedas and Upanishads.
 
-## Available Scripts
+## Editing the site
 
-In the project directory, you can run:
+Almost everything you will want to change lives in one file:
 
-### `npm start`
+```
+src/data/content.js
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+That file holds the hero question, the scroll sequence, the video list, the
+series list, and the channel links. The components read from it, so you can
+change the site's content without touching any component code.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**To link a video directly**, put its 11-character YouTube id in the `id`
+field. While `id` is `null`, that card links to the channel's video tab
+instead.
 
-### `npm test`
+**To link a playlist directly**, put its list id in the `listId` field.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**To change the front page question**, edit `hero.question`. A line break in
+the string becomes a line break on the page.
 
-### `npm run build`
+## Running it
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+npm start      # development, http://localhost:3000
+npm run build  # production bundle into build/
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Design notes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The design is built around two things the channel actually is: a series of
+**questions**, and something made to be **heard** rather than watched.
 
-### `npm run eject`
+- **Colour** comes from brahma muhurta, the hour before sunrise when
+  recitation happened — deep indigo night (`--ink`) with a pale gold horizon
+  (`--dawn`). Not the usual saffron.
+- **Type** is Tiro Devanagari Hindi for display and Mukta for body. Both
+  carry Devanagari and Latin in one voice, so Hindi headlines are set
+  properly rather than falling back to a Latin face.
+- **The descent** is the one piece of scroll-driven motion on the page:
+  Yajnavalkya's answer to Shakalya falling from 3306 to one. Everything
+  else stays still on purpose.
+- **The thread** down the left edge stands for the unbroken guru–shishya
+  line the Vedas travelled along. It lights as you read.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+All tokens live at the top of `src/index.css`. Change them there and the
+whole page follows.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Reduced motion is respected throughout: with it on, the scroll sequence
+becomes a plain list and the reveals are switched off.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Deployment
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the
+app and copies `build/` to the EC2 box over SSH, then restarts nginx. The
+host and the `EC2_SSH_KEY` secret are configured in the workflow and in the
+repository settings.
