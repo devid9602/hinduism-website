@@ -27,8 +27,11 @@ export default function Descent() {
   const last = descent.steps.length - 1;
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    // Hold the first and last beats a little longer than the middle.
-    const i = Math.round(v * last);
+    // The seven beats play out over the first 80% of the scroll; the
+    // rest holds on "एक", so the answer the whole thing descends
+    // towards gets room to land instead of flicking past.
+    const t = Math.min(1, v / 0.8);
+    const i = Math.round(t * last);
     setStep(Math.min(last, Math.max(0, i)));
   });
 
