@@ -25,6 +25,9 @@ export default function Nav() {
             <a href="#shrinkhala">शृंखलाएँ</a>
           </li>
           <li>
+            <a href="#granth">संदर्भ</a>
+          </li>
+          <li>
             <a href="#parichay">परिचय</a>
           </li>
           <li>

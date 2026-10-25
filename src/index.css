@@ -698,6 +698,235 @@ ul {
   }
 }
 
+/* ---------- Section head variant: heading over a standfirst ---------- */
+
+.sec-head--stack {
+  display: block;
+}
+
+.sec-head__stand {
+  margin-top: 1.1rem;
+  max-width: 58ch;
+  color: var(--text-soft);
+  font-size: var(--t-lg);
+  line-height: 1.6;
+}
+
+/* ---------- Granth: the map of the canon ---------- */
+
+.granth__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.granth__title {
+  font-size: var(--t-xl);
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--dawn-dim);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.granth__gloss {
+  font-family: var(--body);
+  font-size: var(--t-xs);
+  font-weight: 300;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+}
+
+.granth__note {
+  margin-top: 1.1rem;
+  color: var(--text-soft);
+  font-size: var(--t-sm);
+  max-width: 44ch;
+}
+
+.granth__group {
+  margin-top: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.granth__label {
+  font-size: var(--t-xs);
+  color: var(--dawn-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.7rem;
+}
+
+.granth__items li {
+  padding-block: 0.55rem;
+  border-bottom: 1px solid var(--ink-line);
+  color: var(--text);
+  font-size: var(--t-sm);
+}
+
+@media (max-width: 820px) {
+  .granth__cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Darshan: the nine schools ---------- */
+
+.darshan__group {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+
+.darshan__groupHead {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dawn-dim);
+}
+
+.darshan__groupHead h3 {
+  font-size: var(--t-xl);
+}
+
+.darshan__groupHead p {
+  color: var(--text-faint);
+  font-size: var(--t-sm);
+}
+
+.darshan__list li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: baseline;
+  padding-block: clamp(1rem, 2.5vh, 1.5rem);
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.darshan__name {
+  font-family: var(--display);
+  font-size: var(--t-lg);
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.darshan__by {
+  font-family: var(--body);
+  font-size: var(--t-xs);
+  font-weight: 300;
+  color: var(--text-faint);
+}
+
+.darshan__line {
+  color: var(--text-soft);
+  font-size: var(--t-sm);
+}
+
+.darshan__aside {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--ink-line);
+  background: rgba(19, 23, 34, 0.5);
+}
+
+.darshan__asideList li {
+  color: var(--text-soft);
+  font-size: var(--t-sm);
+  padding-block: 0.5rem;
+}
+
+.darshan__asideList li + li {
+  border-top: 1px solid var(--ink-line);
+}
+
+@media (max-width: 760px) {
+  .darshan__list li {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* ---------- Shabd: the glossary ---------- */
+
+.shabd__list {
+  border-top: 1px solid var(--ink-line);
+}
+
+.shabd__row {
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.shabd__row summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: clamp(1rem, 2.5vh, 1.4rem);
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.35s var(--ease);
+}
+
+.shabd__row summary::-webkit-details-marker {
+  display: none;
+}
+
+.shabd__word {
+  font-family: var(--display);
+  font-size: var(--t-lg);
+}
+
+.shabd__row[open] .shabd__word,
+.shabd__row summary:hover .shabd__word {
+  color: var(--dawn);
+}
+
+/* A plus that becomes a minus — it reports state, so it earns its place */
+.shabd__cue {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+
+.shabd__cue::before,
+.shabd__cue::after {
+  content: "";
+  position: absolute;
+  background: var(--dawn-dim);
+  transition: transform 0.4s var(--ease-out), background 0.35s var(--ease);
+}
+
+.shabd__cue::before {
+  inset-inline: 0;
+  top: 5px;
+  height: 1px;
+}
+
+.shabd__cue::after {
+  inset-block: 0;
+  left: 5px;
+  width: 1px;
+}
+
+.shabd__row[open] .shabd__cue::before,
+.shabd__row[open] .shabd__cue::after {
+  background: var(--dawn);
+}
+
+.shabd__row[open] .shabd__cue::after {
+  transform: scaleY(0);
+}
+
+.shabd__meaning {
+  color: var(--text-soft);
+  font-size: var(--t-sm);
+  max-width: 62ch;
+  padding-bottom: clamp(1rem, 2.5vh, 1.4rem);
+}
+
 /* ---------- Shruti ---------- */
 
 .shruti {
